@@ -51,10 +51,18 @@ exports.createGzipFromParts = (parts) ->
 	# write ending DEFLATE part
 	out.append(DEFLATE_END)
 	# write CRC
-	out.append(crcUtils.crc32_combine_multi(parts).combinedCrc32)
-	# write length
+	CRC32_PERIOD_NUMBER = 0xFFFFFFFF # 2^32-1
+	normalizedParts = parts.map (p) ->
+		# crc32_combine(crc1, crc2, n) receives len as a 32-bit integer, so any len >= 2^32 must be reduced here.
+		if p.len <= CRC32_PERIOD_NUMBER
+			return p
+		return { crc: p.crc, len: p.len % CRC32_PERIOD_NUMBER }
+	out.append(crcUtils.crc32_combine_multi(normalizedParts).combinedCrc32)
+	# write the ISIZE length, modulo 2^32 per RFC 1952 section 2.3.1
+	# https://www.rfc-editor.org/info/rfc1952/#page-8:~:text=original%20(uncompressed)%20input-,data%20modulo%202%5E32
 	len = Buffer.alloc(4)
-	len.writeUInt32LE(parts.map((p) -> p.len).reduce((a, b) -> a + b), 0)
+	isize = parts.map((p) -> p.len).reduce((a, b) -> a + b) % 0x100000000
+	len.writeUInt32LE(isize, 0)
 	out.append(len)
 	# calculate compressed size. Add 10 byte header, 2 byte DEFLATE ending block, 8 byte footer
 	out.zLen = parts.map((p) -> p.zLen).reduce((a, b) -> a + b) + 20
