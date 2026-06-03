@@ -1,4 +1,18 @@
 - commits:
+    - subject: Update @balena/node-crc-utils to 3.1.0 & use the built-in 4GB part
+        normalization
+      hash: 7afa168fe3e497f0d2dae3f4f691faa6ea34c7bf
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        See: https://github.com/balena-io-modules/node-crc-utils/pull/8
+        see: https://github.com/balena-io-modules/node-crc-utils/pull/8
+      author: Thodoris Greasidis
+  version: 2.0.3
+  title: ""
+  date: 2026-06-03T10:17:08.839Z
+- commits:
     - subject: Fix compressing files larger than 4GB
       hash: 9828ba3f6708000e1c8f0bf108d00fe2ba754dbf
       body: ""
