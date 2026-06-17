@@ -42,6 +42,11 @@ class DeflatePartStream extends DeflateCRC32Stream
 exports.createDeflatePart = ->
 	return new DeflatePartStream()
 
+exports.getGzipSizeFromParts = (parts) ->
+	# calculate compressed size. Add 10 byte header, 2 byte DEFLATE ending block, 8 byte footer
+	zLen = parts.map((p) -> p.zLen).reduce((a, b) -> a + b) + 20
+	return zLen
+
 exports.createGzipFromParts = (parts) ->
 	out = CombinedStream.create()
 	# write the header
@@ -58,7 +63,7 @@ exports.createGzipFromParts = (parts) ->
 	isize = parts.map((p) -> p.len).reduce((a, b) -> a + b) % 0x100000000
 	len.writeUInt32LE(isize, 0)
 	out.append(len)
-	# calculate compressed size. Add 10 byte header, 2 byte DEFLATE ending block, 8 byte footer
-	out.zLen = parts.map((p) -> p.zLen).reduce((a, b) -> a + b) + 20
+	# calculate compressed size.
+	out.zLen = exports.getGzipSizeFromParts(parts)
 	# return stream
 	return out
