@@ -1,4 +1,17 @@
 - commits:
+    - subject: Add a separate getGzipSizeFromParts helper
+      hash: c6ded05785cb8c02c7eda1e429946270dc619782
+      body: ""
+      footer:
+        Change-type: minor
+        change-type: minor
+        See: https://github.com/balena-io-modules/node-crc-utils/pull/8
+        see: https://github.com/balena-io-modules/node-crc-utils/pull/8
+      author: Thodoris Greasidis
+  version: 2.1.0
+  title: ""
+  date: 2026-06-18T02:03:08.131Z
+- commits:
     - subject: Update @balena/node-crc-utils to 3.1.0 & use the built-in 4GB part
         normalization
       hash: 7afa168fe3e497f0d2dae3f4f691faa6ea34c7bf

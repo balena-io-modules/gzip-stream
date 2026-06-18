@@ -1,6 +1,6 @@
 {
   "name": "gzip-stream",
-  "version": "2.0.3",
+  "version": "2.1.0",
   "description": "",
   "main": "lib.js",
   "scripts": {
@@ -32,6 +32,6 @@
     "coffeescript": "^2.5.1"
   },
   "versionist": {
-    "publishedAt": "2026-06-03T10:17:08.890Z"
+    "publishedAt": "2026-06-18T02:03:08.177Z"
   }
 }
